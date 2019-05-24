@@ -88,10 +88,12 @@ def register():
 @app.route('/confirm/<token>')
 def confirm(token):
     serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    email = None
     try:
         email = serializer.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=600)
     except:
-        flash('The confirmation link is invalid or has expired.', 'danger')
+        flash('The confirmation link has expired.')
+        return redirect(url_for('index'))
     user = User.query.filter_by(email=email).first_or_404()
     if user.confirmed:
         flash('Account already confirmed')

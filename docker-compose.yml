@@ -1,6 +1,6 @@
 version: '3'
 services:
-  rabbit:
+  RabbitMQ:
     image: "rabbitmq"
     expose:
       - "5672"
@@ -9,8 +9,12 @@ services:
       context: mail_sender
       dockerfile: Dockerfile
     restart: always
+    ports:
+      - "587:587"
     depends_on:
-      - rabbit
+      - RabbitMQ
+    links:
+      - RabbitMQ
   flask_app:
     build:
       context: flask_app
@@ -19,4 +23,7 @@ services:
       - "5000:5000"
     restart: always
     depends_on:
-      - rabbit
+      - RabbitMQ
+    links:
+      - RabbitMQ
+     

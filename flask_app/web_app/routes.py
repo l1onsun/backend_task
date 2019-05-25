@@ -65,7 +65,8 @@ def register():
         db.session.commit()
         flash('Congratulations, you are almost registered user! Just confirm your email now!')
 
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=5672))
+        #connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=5672))
+        connection = pika.BlockingConnection(pika.ConnectionParameters('RabbitMQ', port=5672))
 
         channel = connection.channel()
         channel.queue_declare(queue='RabbitMQ')

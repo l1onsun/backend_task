@@ -5,7 +5,7 @@ WORKDIR /code
 RUN apk add --update py3-pip
 RUN pip install -r requirements.txt
 
-#EXPOSE 8000
+EXPOSE 587
 
-#CMD ["sender/wait-for-it.sh", "rabbit:5672", "--", "python3", "sender/app.py"]
-CMD ["python3", "/code/app.py"]
+CMD ["/code/wait-for-it.sh", "RabbitMQ:5672", "--", "python3", "/code/app.py"]
+#CMD ["python3", "/code/app.py"]

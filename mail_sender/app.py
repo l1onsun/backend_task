@@ -14,7 +14,7 @@ mail = Mail(app)
 #     mail.send(Message("test mail, sorry if misaddressed ", body="www.vk.com/",recipients=['lionson@mail.ru'], sender=app.config['MAIL_USERNAME']))
 #     print("__after")
 
-conn_params = pika.ConnectionParameters(host='localhost', port=5672)
+conn_params = pika.ConnectionParameters('RabbitMQ', port=5672, socket_timeout=10)
 connection = pika.BlockingConnection(conn_params)
 
 channel = connection.channel()
